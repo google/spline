@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<layout>
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.android.example.spline.viewmodel.DocumentViewModel"/>
+    </data>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context="com.android.example.spline.EditorActivity">
+
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:title="@{viewModel.prettyFileName}"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/content_editor"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            tools:context="com.android.example.spline.EditorActivity"
+            tools:showIn="@layout/activity_editor">
+
+            <!-- Left layer panel -->
+            <LinearLayout
+                android:id="@+id/left_panel"
+                android:layout_width="196dp"
+                android:layout_height="match_parent"
+                android:background="@color/sidePanel"
+                android:orientation="vertical">
+
+                <TextView
+                    style="@style/Base.TextAppearance.AppCompat.Button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/medium_padding"
+                    android:text="@string/layer_list_title"/>
+
+                <com.android.example.spline.view.LayerListView
+                    android:id="@+id/layer_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:currentLayer="@={viewModel.currentLayer}"
+                    app:root="@{viewModel.root}"/>
+
+                <Button
+                    android:id="@+id/add_layer_btn"
+                    style="@style/hero_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/ic_add_black_24dp"
+                    android:drawableTint="@android:color/white"
+                    android:gravity="center"
+                    android:onClick="onClick"
+                    android:text="@string/add"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark"/>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/divider"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <com.android.example.spline.view.RulerView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ruler_height"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/ruler_height"
+                    app:highlightSize="@{viewModel.currentLayer.width}"
+                    app:highlightStart="@={viewModel.currentLayer.x}"
+                    app:viewportStart="@={viewModel.viewportX}"/>
+
+                <com.android.example.spline.view.RulerView
+                    android:layout_width="@dimen/ruler_height"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="@dimen/ruler_height"
+                    app:highlightSize="@{viewModel.currentLayer.height}"
+                    app:highlightStart="@={viewModel.currentLayer.y}"
+                    app:viewportStart="@={viewModel.viewportY}"/>
+
+                <View
+                    android:id="@+id/topLeftDividerHoriz"
+                    android:layout_width="@dimen/ruler_height"
+                    android:layout_height="@dimen/divider_width"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="@dimen/ruler_height_minus_one"
+                    android:background="@color/divider"/>
+
+                <View
+                    android:id="@+id/topLeftDividerVert"
+                    android:layout_width="@dimen/divider_width"
+                    android:layout_height="@dimen/ruler_height"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="@dimen/ruler_height_minus_one"
+                    android:background="@color/divider"/>
+
+                <!-- Where the document is actually rendered -->
+                <com.android.example.spline.view.DocumentView
+                    android:id="@+id/document_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/ruler_height"
+                    android:layout_marginTop="@dimen/ruler_height"
+                    android:focusableInTouchMode="true"
+                    app:currentLayer="@={viewModel.currentLayer}"
+                    app:root="@{viewModel.root}"
+                    app:viewportHeight="@={viewModel.viewportHeight}"
+                    app:viewportWidth="@={viewModel.viewportWidth}"
+                    app:viewportX="@={viewModel.viewportX}"
+                    app:viewportY="@={viewModel.viewportY}"/>
+
+                <!--app:layers="@{viewModel.layers}"-->
+            </RelativeLayout>
+
+            <!-- Right properties panel -->
+            <LinearLayout
+                android:id="@+id/right_panel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:orientation="horizontal"
+                android:visibility="@{viewModel.rightPanelVisibility}">
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/divider"/>
+
+                <!-- Nest content in a vertical scroll view so that onscreen keyboard and
+                     too much content don't cause right panel content to be clipped an
+                     inaccessible -->
+                <ScrollView
+                    android:layout_width="270dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/sidePanel">
+
+                    <include
+                        layout="@layout/layout_right_panel_layer"
+                        app:currentItem="@{viewModel.currentLayer}"/>
+
+                </ScrollView>
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="app_name">Spline</string>
+    <string name="untitled">Demo drawing</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="open_file">Open file</string>
+    <string name="open">Open</string>
+    <string name="new_file">New file</string>
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
+    <string name="date_last_opened">Last opened</string>
+    <string name="date_last_modified">Last modified</string>
+    <string name="date_created">Created</string>
+
+    <string name="layer_list_title">Layers</string>
+    <string name="add">Add</string>
+    <string name="rect">Rect</string>
+    <string name="triangle">Triangle</string>
+    <string name="oval">Oval</string>
+
+    <string name="opacity_title">Opacity</string>
+    <string name="position_title">Position</string>
+    <string name="x_hint">X</string>
+    <string name="y_hint">Y</string>
+    <string name="width_hint">Width</string>
+    <string name="height_hint">Height</string>
+
+    <string name="fill_title">Fill</string>
+    <string name="hex_hint">Hex</string>
+    <string name="red_hint">R</string>
+    <string name="green_hint">G</string>
+    <string name="blue_hint">B</string>
+    <string name="alpha_hint">A</string>
+
+    <string name="delete">Delete</string>
+    <string name="cut">Cut</string>
+    <string name="copy">Copy</string>
+    <string name="paste">Paste</string>
+    <string name="duplicate">Duplicate</string>
+    <string name="group">Group</string>
+
+</resources>

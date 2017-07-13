@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context="com.android.example.spline.EditorActivity">
+
+    <data>
+
+        <variable
+            name="color"
+            type="com.android.example.spline.model.Color"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/large_padding"
+        android:paddingLeft="@dimen/medium_padding"
+        android:paddingRight="@dimen/medium_padding"
+        android:paddingTop="@dimen/small_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/small_padding"
+                app:hintAnimationEnabled="false">
+
+                <android.support.design.widget.TextInputEditText
+                    android:id="@+id/edit_hex"
+                    android:layout_width="@dimen/hex_edit_width"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hex_hint"
+                    android:inputType="textNoSuggestions"
+                    android:text="@={color.hexString}"/>
+
+            </android.support.design.widget.TextInputLayout>
+
+            <Space
+                android:layout_width="1dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <LinearLayout
+                android:id="@+id/rgb_edittexts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/small_padding"
+                    app:hintAnimationEnabled="false">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edit_red"
+                        android:layout_width="@dimen/rgb_edit_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/red_hint"
+                        android:maxLength="3"
+                        android:text="@={color.redString}"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hintAnimationEnabled="false">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edit_green"
+                        android:layout_width="@dimen/rgb_edit_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/green_hint"
+                        android:maxLength="3"
+                        android:text="@={color.greenString}"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:hintAnimationEnabled="false">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/edit_blue"
+                        android:layout_width="@dimen/rgb_edit_width"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/blue_hint"
+                        android:maxLength="3"
+                        android:text="@={color.blueString}"/>
+
+                </android.support.design.widget.TextInputLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:orientation="vertical">
+
+            <com.android.example.spline.view.HuePicker
+                android:id="@+id/hue_selector"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginLeft="-16dp"
+                android:layout_marginRight="-16dp"
+                android:layout_marginTop="0dp"
+                app:hue="@={color.hue}"/>
+
+            <com.android.example.spline.view.SaturationValuePicker
+                android:id="@+id/sat_val_selector"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/saturation_value_height"
+                app:hue="@{color.hue}"
+                app:saturation="@={color.saturation}"
+                app:value="@={color.value}"/>
+        </LinearLayout>
+    </LinearLayout>
+</layout>

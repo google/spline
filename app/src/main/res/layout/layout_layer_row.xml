@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright 2017 Google Inc.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~    https://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<layout>
+
+    <data>
+
+        <variable
+            name="row"
+            type="com.android.example.spline.viewmodel.LayerRowViewModel"/>
+
+        <variable
+            name="callbacks"
+            type="com.android.example.spline.viewmodel.LayerRowCallbacks"/>
+
+    </data>
+
+    <!-- Unfortunately, expressions can't be used yet with the style attribute, so we have
+         to individually set style attributes like background and textColor with expressions here.
+         This is problematic for properties like the selectableItemBackground (ripple drawable),
+         whose color would ideally to be set conditionally with a ThemeOverlay (we'd prefer a dark
+         ripple when the row is unselected and a light ripple when the background is blue. We use
+         a viewmodel to eliminate the large number of ternary operators that would otherwise be
+         required to style the row, moving that code to viewmodel getters. -->
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/small_row_height"
+        android:alpha="@{row.alpha}"
+        android:background="@{row.backgroundColor}"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:onTouch="@{(v, e)->callbacks.onRowTouch(v, e, row)}"
+        android:orientation="horizontal"
+        android:paddingBottom="0dp"
+        android:paddingLeft="@{@dimen/small_padding + row.rowIndent * @dimen/arrow_width}"
+        android:paddingRight="@dimen/medium_padding"
+        android:paddingTop="0dp">
+
+        <CheckBox
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="@dimen/arrow_width"
+            android:button="@drawable/ic_keyboard_arrow_right_black_24dp"
+            android:buttonTint="@{row.textColor}"
+            android:checked="@{row.twirledDown}"
+            android:focusable="false"
+            android:onClick="@{(v)->callbacks.onTwirl(v, row)}"
+            android:stateListAnimator="@animator/animator_arrow"
+            android:visibility="@{row.twirlVisibility}"
+            app:backgroundTint="@color/arrow_background_tint_selected"/>
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginLeft="@dimen/small_padding"
+            android:layout_marginRight="@dimen/medium_padding"
+            android:src="@{row.thumbnail}"
+            android:tint="@{row.textColor}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/small_padding"
+            android:layout_weight="1"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="@{row.name}"
+            android:textColor="@{row.textColor}"
+            android:textSize="16sp"/>
+
+        <CheckBox
+            android:id="@+id/visible_check"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:button="@drawable/drawable_visibility_checkbox"
+            android:buttonTint="@{row.textColor}"
+            android:checked="@={row.visible}"
+            android:visibility="@{row.visibleToggleVisibility}"/>
+
+    </LinearLayout>
+</layout>
